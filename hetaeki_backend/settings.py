@@ -20,7 +20,7 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-openai_api_key = os.getenv("OPENAI_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'hetaeki_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.getenv("DB_NAME", os.path.join(BASE_DIR, 'db.sqlite3')),
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -157,8 +157,16 @@ INSTALLED_APPS += ["django_celery_beat"]
 from celery.schedules import crontab
 
 CELERY_BEAT_SCHEDULE = {
-    'update-bokjiro-daily': {
-        'task': 'hetaeki_backend.tasks.update_bokjiro',
-        'schedule': crontab(hour=3, minute=0),
+    "collect_central_daily": {
+        "task": "documents.tasks.run_collector_central",
+        "schedule": crontab(hour=4, minute=0),  # 매일 오전 4시
+    },
+    "collect_local_daily": {
+        "task": "documents.tasks.run_collector_local",
+        "schedule": crontab(hour=4, minute=30),  # 매일 오전 4시 30분
+    },
+    "generate_daily_hot_topics": {
+        "task": "queries.tasks.daily_generate_hot_topics",
+        "schedule": crontab(minute=0, hour=3),  # 매일 오전 3시
     },
 }

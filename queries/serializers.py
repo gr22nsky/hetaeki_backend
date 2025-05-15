@@ -4,5 +4,5 @@ from .models import UserQuery
 class UserQuerySerializer(serializers.ModelSerializer):
     class Meta:
         model = UserQuery
-        fields = ["id", "question", "answer", "created_at"]
+        fields = ["id", "user", "question", "answer", "created_at"]
         read_only_fields = ["id", "answer", "created_at"]
