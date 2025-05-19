@@ -8,7 +8,7 @@ class UserQuery(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"[{self.user.username}] {self.question[:30]}"
+        return f"[{self.user.email}] {self.question[:30]}"
 
 
 class HotTopic(models.Model):

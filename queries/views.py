@@ -25,8 +25,8 @@ class QueryAnswerView(APIView):
             return Response({"error": "사용자 프로필 정보가 누락되었습니다."}, status=status.HTTP_400_BAD_REQUEST)
 
         # 질문에 사용자 정보를 추가
-        system_context = f"사용자의 나이: {age}, 지역: {region} {subregion}. "
-        full_query = f"{system_context}\n질문: {question}"
+        system_context = f"[사용자정보] 나이: {age}, 지역: {region} {subregion}. "
+        full_query = f"{system_context}\n[질문]: {question}"
 
         try:
             answer = run_qa(full_query)

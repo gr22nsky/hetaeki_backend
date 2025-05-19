@@ -19,8 +19,8 @@ SERVICE_KEY = os.getenv("BOKJIRO_API_KEY")
 
 def fetch_services(source: Literal["central", "local"]):
     base_url = {
-        "central": "https://apis.data.go.kr/B554287/NationalWelfareInformationsV001/NationalWelfarelistV001",
-        "local": "https://apis.data.go.kr/B554287/LocalGovernmentWelfareInformations/LcgvWelfarelist",
+        "central": "http://apis.data.go.kr/B554287/NationalWelfareInformationsV001/NationalWelfarelistV001",
+        "local": "http://apis.data.go.kr/B554287/LocalGovernmentWelfareInformations/LcgvWelfarelist",
     }[source]
 
     service_items = []
@@ -87,3 +87,6 @@ def collect_documents(source: Literal["central", "local"]):
         )
         store_to_vectorstore(sid, f"{title}\n{summary}")
         print(f"✅ 저장 완료: {title}")
+
+if __name__ == "__main__":
+    collect_documents("local")
