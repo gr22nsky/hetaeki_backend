@@ -8,6 +8,7 @@ CHROMA_PATH = os.path.join(os.path.dirname(__file__), "chroma_documents")
 os.makedirs(CHROMA_PATH, exist_ok=True)
 
 def store_to_vectorstore(service_id: str, text: str):
+    """주어진 텍스트를 벡터로 변환하여 Chroma 벡터스토어에 저장."""
     # 1. Document 생성
     document = Document(
         page_content=text,

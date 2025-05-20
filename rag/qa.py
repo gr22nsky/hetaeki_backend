@@ -15,6 +15,7 @@ CHROMA_PATH = "rag/chroma_documents"
 
 # ----------- 상세내용 API 호출 로직 -----------
 def fetch_detail_content(service_id: str, source: str) -> str:
+    """service_id와 source에 따라 상세 정책 내용을 외부 API에서 조회."""
     SERVICE_KEY = os.getenv("BOKJIRO_API_KEY")
 
     if source == "central":
@@ -51,6 +52,7 @@ def fetch_detail_content(service_id: str, source: str) -> str:
 
 # ----------- 벡터스토어 초기화 -----------
 def get_retriever(k=1):
+    """Chroma 벡터스토어에서 k개의 유사 문서 검색기 반환."""
     vectorstore = Chroma(
         persist_directory=CHROMA_PATH,
         embedding_function=OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY),
@@ -60,6 +62,7 @@ def get_retriever(k=1):
 
 # ----------- RAG QA 실행 -----------
 def run_qa(query: str) -> str:
+    """질문(query)에 대해 RAG 기반으로 답변 생성."""
     retriever = get_retriever()
     docs = retriever.invoke(query)
 

@@ -1,4 +1,3 @@
-# query/views.py
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -8,9 +7,11 @@ from accounts.models import User
 from rag.qa import run_qa
 
 class QueryAnswerView(APIView):
+    """질문에 대한 GPT 기반 응답 API 뷰."""
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        """질문을 받아 GPT 응답을 반환."""
         question = request.data.get("question", "").strip()
         if not question:
             return Response({"error": "질문을 입력해주세요."}, status=status.HTTP_400_BAD_REQUEST)
@@ -38,7 +39,9 @@ class QueryAnswerView(APIView):
 
 
 class HotTopicView(APIView):
+    """연령대별 인기 질문 주제 조회 API 뷰."""
     def get(self, request):
+        """age_group 파라미터로 인기 주제 반환."""
         age_group = request.query_params.get("age_group")
 
         if not age_group:

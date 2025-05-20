@@ -18,6 +18,7 @@ from rag.utils import store_to_vectorstore
 SERVICE_KEY = os.getenv("BOKJIRO_API_KEY")
 
 def fetch_services(source: Literal["central", "local"]):
+    """중앙/지자체 복지 정책 리스트를 API에서 수집."""
     base_url = {
         "central": "http://apis.data.go.kr/B554287/NationalWelfareInformationsV001/NationalWelfarelistV001",
         "local": "http://apis.data.go.kr/B554287/LocalGovernmentWelfareInformations/LcgvWelfarelist",
@@ -71,12 +72,15 @@ def fetch_services(source: Literal["central", "local"]):
 
 
 def collect_documents(source: Literal["central", "local"]):
+    """수집한 정책을 DB와 벡터스토어에 저장."""
     items = fetch_services(source)
     for sid, title, summary in items:
+        # 이미 존재하는 경우 건너뜀
         if Document.objects.filter(service_id=sid).exists():
             print(f"⚠️ 이미 존재: {sid}")
             continue
 
+        # DB 저장 및 벡터스토어 저장
         Document.objects.update_or_create(
             service_id=sid,
             defaults={
@@ -89,4 +93,5 @@ def collect_documents(source: Literal["central", "local"]):
         print(f"✅ 저장 완료: {title}")
 
 if __name__ == "__main__":
+    # 단독 실행 시 지자체 정책 수집
     collect_documents("local")

@@ -3,7 +3,9 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager
 
 class UserManager(BaseUserManager):
+    """사용자 생성 및 관리 전용 매니저."""
     def create_user(self, email, password=None, **extra_fields):
+        """이메일과 비밀번호로 일반 사용자 생성."""
         if not email:
             raise ValueError("The Email field must be set")
         email = self.normalize_email(email)
@@ -13,6 +15,7 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
+        """관리자 권한을 가진 슈퍼유저 생성."""
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_active", True)
@@ -26,6 +29,7 @@ class UserManager(BaseUserManager):
     
 
 class User(AbstractUser):
+    """커스텀 사용자 모델(이메일 기반)."""
     username = None
     first_name = None
     last_name = None
@@ -40,4 +44,5 @@ class User(AbstractUser):
     objects = UserManager()
 
     def __str__(self):
+        """이메일 문자열 반환."""
         return self.email
