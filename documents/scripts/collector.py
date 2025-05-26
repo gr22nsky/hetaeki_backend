@@ -92,6 +92,6 @@ def collect_documents(source: Literal["central", "local"]):
         store_to_vectorstore(sid, f"{title}\n{summary}")
         print(f"✅ 저장 완료: {title}")
 
-if __name__ == "__main__":
-    # 단독 실행 시 지자체 정책 수집
-    collect_documents("local")
+# 수동실행 central or local
+# if __name__ == "__main__":
+    # collect_documents("central")
