@@ -9,6 +9,10 @@
 - **중앙정부/지자체 복지 정책**을 자동 수집·분석하여, 사용자의 나이/지역/질문에 맞는 복지 혜택을 AI가 안내합니다.
 - **GPT-4o 기반 RAG 파이프라인**으로 자연어 질문에 대해 맞춤형 정책 정보를 제공합니다.
 - 사회적 약자, 청년, 고령층, 이민자 등 정보 접근이 어려운 계층의 정책 접근성을 높이는 것이 목표입니다.
+<img width="354" alt="스크린샷 2025-05-27 오전 5 47 15" src="https://github.com/user-attachments/assets/4084d663-c66e-492b-a77f-bfa0464251b8" />
+<img width="354" alt="스크린샷 2025-05-27 오전 5 40 49" src="https://github.com/user-attachments/assets/d68c803f-8d8d-403b-9a01-98383e59698e" />
+<img width="354" alt="스크린샷 2025-05-27 오전 5 45 46" src="https://github.com/user-attachments/assets/f17b2a95-acce-46f1-bd13-0a8bbd64967d" />
+<img width="354" alt="스크린샷 2025-05-27 오전 5 46 00" src="https://github.com/user-attachments/assets/f97a9909-a6a8-41f9-9c7e-1a226b428ab5" />
 
 ---
 
