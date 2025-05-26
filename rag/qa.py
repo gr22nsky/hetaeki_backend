@@ -10,6 +10,8 @@ from documents.models import Document
 import requests
 import xml.etree.ElementTree as ET
 import os
+from langchain_core.embeddings import Embeddings
+from sentence_transformers import SentenceTransformer
 
 CHROMA_PATH = "rag/chroma_documents"
 
@@ -51,11 +53,20 @@ def fetch_detail_content(service_id: str, source: str) -> str:
         return ""
 
 # ----------- 벡터스토어 초기화 -----------
+class SbertEmbeddings(Embeddings):
+    def __init__(self, model_name="jhgan/ko-sroberta-multitask"):
+        self.model = SentenceTransformer(model_name)
+    def embed_documents(self, texts):
+        return self.model.encode(texts, show_progress_bar=False, convert_to_numpy=True).tolist()
+    def embed_query(self, text):
+        return self.model.encode([text], show_progress_bar=False, convert_to_numpy=True)[0].tolist()
+
 def get_retriever(k=1):
     """Chroma 벡터스토어에서 k개의 유사 문서 검색기 반환."""
+    embedding = SbertEmbeddings()
     vectorstore = Chroma(
         persist_directory=CHROMA_PATH,
-        embedding_function=OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY),
+        embedding_function=embedding,
     )
     return vectorstore.as_retriever(search_kwargs={"k": k})
 
@@ -150,7 +161,7 @@ def run_qa(query: str) -> str:
             "question": lambda x: x["question"]
         }
         | prompt
-        | ChatOpenAI(temperature=0.3)
+        | ChatOpenAI(temperature=0.3, model="gpt-4o")
         | StrOutputParser()
     )
 

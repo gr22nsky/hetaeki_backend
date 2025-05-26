@@ -24,7 +24,7 @@ prompt = ChatPromptTemplate.from_messages([
     ("human", "질문들:\n{questions}\n\nJSON으로 top 5 관심 주제를 알려줘."),
 ])
 
-llm = ChatOpenAI(temperature=0.3)
+llm = ChatOpenAI(temperature=0.3, model="gpt-4o")
 chain = prompt | llm | parser
 
 
