@@ -49,7 +49,7 @@ def fetch_detail_content(service_id: str, source: str) -> str:
             detail = root
         return ET.tostring(detail, encoding="unicode", method="xml") if detail is not None else ""
     except Exception as e:
-        print(f"❌ 상세 API 호출 실패: {service_id}, {e}")
+        # print(f"❌ 상세 API 호출 실패: {service_id}, {e}")
         return ""
 
 # ----------- 벡터스토어 초기화 -----------
@@ -88,9 +88,9 @@ def run_qa(query: str) -> str:
             extended_content = f"[출처: {source}]\n[요약]\n{doc.page_content}\n\n[상세설명]\n{detail}"
             extended_docs.append(LCDocument(page_content=extended_content, metadata={"service_id": service_id}))
         except Exception as e:
-            print(f"❌ 문서 확장 실패: {doc.metadata.get('service_id')}, {e}")
+            # print(f"❌ 문서 확장 실패: {doc.metadata.get('service_id')}, {e}")
             extended_docs.append(doc)
-    print("docs: ",extended_docs)
+    # print("docs: ",extended_docs)
     # Prompt + LLM chain 구성
     prompt = ChatPromptTemplate.from_template("""
 너는 대한민국 정부 및 지자체의 복지 정책을 안내하는 AI 어시스턴트야.

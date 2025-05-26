@@ -53,7 +53,7 @@ class HotTopicView(APIView):
             return Response({"message": f"{age_group}에 대한 주제를 찾을 수 없습니다."}, status=status.HTTP_404_NOT_FOUND)
 
         return Response({
-            "age_group": topic.age_group,
+            "age_group": topic.get_age_group_display(),
             "topics": topic.topics,
             "created_at": topic.created_at
         })

@@ -1,3 +1,12 @@
+import os
+import sys
+import django
+
+# Django 환경 세팅
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "hetaeki_backend.settings")
+django.setup()
+
 import json
 from datetime import timedelta
 from django.utils import timezone
@@ -55,3 +64,8 @@ def generate_top5_topics():
         except Exception as e:
             print(f"❌ [{label}] GPT 호출 실패:", e)
     print('✅ 저장 완료')
+
+
+# 수동실행
+if __name__ == "__main__":
+    generate_top5_topics()

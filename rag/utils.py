@@ -38,5 +38,4 @@ def store_to_vectorstore(service_id: str, text: str):
         embedding=embedding,
         persist_directory=CHROMA_PATH,
     )
-    vectorstore.persist()
-    print(f"✅ Vector 저장 완료: {service_id}")
+    vectorstore.persist()    print(f"✅ Vector 저장 완료: {service_id}")
